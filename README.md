@@ -1,4 +1,4 @@
-# Object-Oriented Programming II
+# Programação de Objetos II
 Repositório criado com o objectivo de partilhar programas desenvolvidos no curso de Programação Orientada a Objectos 2 ministrado pelos professores Dr. Jônata Tyska e Dr. Mateus Grellert.
 
 ## Contribuições
