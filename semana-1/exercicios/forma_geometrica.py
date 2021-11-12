@@ -28,7 +28,7 @@ class Quadrado(FormaGeometrica):
 class Retangulo(FormaGeometrica):
     def __init__(self, base: float, altura: float):
         self.base = base
-        self. altura = altura
+        self.altura = altura
     
     def area(self): 
         return self.base * self.altura
@@ -38,7 +38,7 @@ class Circulo(FormaGeometrica):
         self.raio = raio
     
     def area(self): 
-        return math.pi * self.raio
+        return math.pi * math.pow(self.raio, 2)
 
 def main():
     quadrado = Quadrado(2)
