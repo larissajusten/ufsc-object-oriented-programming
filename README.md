@@ -1,5 +1,5 @@
 # Object-Oriented Programming II
-Repository created with the objective of sharing programs developed in the Object Oriented Programming 2 course taught by professors Dr. Jônata Tyska and Dr. Mateus Grellert.
+Repositório criado com o objectivo de partilhar programas desenvolvidos no curso de Programação Orientada a Objectos 2 ministrado pelos professores Dr. Jônata Tyska e Dr. Mateus Grellert.
 
 ## Contribuições
 
