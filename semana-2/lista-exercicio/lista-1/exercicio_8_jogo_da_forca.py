@@ -173,20 +173,11 @@ class Jogo:
     def jogador(self, jogador):
         self.__jogador = jogador
 
-    def TentarNovamente(self):
-        escolha = input('# Deseja tentar novamente: [S/N] ')
-        if escolha == 's':
-            self.IniciarJogo()
-        if escolha == 'n':
-            exit()
-        else:
-            self.TentarNovamente()
-
     def DigitarLetra(self):
         print('')
         letra = input('> Digite uma letra: ')[0].lower()
         if letra.isalpha() and not self.forca.CheckPalavraInLetrasUsadas() and self.jogador.vidas > 0:
-            if self.forca.CheckLetraInPalavra(letra):
+            if self.forca.CheckLetraInPalavra(letra) and not self.forca.CheckLetraInLetrasUsadas(letra):
                 self.forca.AdicionaNovaLetraUsada(letra)
             elif self.forca.CheckLetraInLetrasUsadas(letra):
                 print('# Letra ja utilizada!')
@@ -199,7 +190,6 @@ class Jogo:
             self.DigitarLetra()
 
     def PrintarInformacoes(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
         print('# FORCA')
         self.forca.PrintarForca(self.jogador.vidas)
         self.forca.PrintarPalavra()
@@ -209,6 +199,15 @@ class Jogo:
     def DinamicaJogo(self):
         self.PrintarInformacoes()
         self.DigitarLetra()
+
+    def TentarNovamente(self):
+        escolha = input('# Deseja tentar novamente: [S/N] ')
+        if escolha == 's':
+            self.IniciarJogo()
+        if escolha == 'n':
+            return None
+        else:
+            self.TentarNovamente()
 
     def IniciarJogo(self):
         index_palavra_aleatoria = random.randint(0, len(palavras)-1)
@@ -228,7 +227,9 @@ class Jogo:
             self.TentarNovamente()
 
 def main():
+    print('# Exercicio 8 - Jogo da Forca')
     jogo = Jogo()
     jogo.IniciarJogo()
 
-main()
+if __name__ == '__main__':
+    main()

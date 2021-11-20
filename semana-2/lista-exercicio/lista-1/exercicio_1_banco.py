@@ -1,5 +1,4 @@
 """
-Exercício 1: Banco
     O banco Tatu, moderno e eficiente, precisa de um novo programa para controlar o saldo de seus correntistas.
 
     Cada conta corrente pode ter um ou mais clientes como titular. 
@@ -142,28 +141,37 @@ class Conta(ABC):
         print(f'# Saldo: {self.saldo}')
 
     def Sacar(self, valor):
-        if valor < 0:
-            raise ValueError('# Valor invalido!')
-        elif valor > self.saldo:
+        if valor.isspace() or not valor.isnumeric():
+            print('# Valor invalido!')
+        elif float(valor) < 0:
+            print('# Valor invalido!')
+        elif float(valor) > self.saldo:
             print('# Saldo insuficiente! Não foi possivel realizar a operação.')
         else:
-            self.saldo = self.saldo - valor
-            print(f'# Saque de R$ {valor} realizado com sucesso!')
+            self.saldo = self.saldo - float(valor)
+            print(f'# Saque de R$ {float(valor)} realizado com sucesso!')
             print(f'# Saldo: {self.saldo}')
-            self.extrato = f'# (Saldo) Saque de R$ {valor} -> {round(self.saldo, 2)}'
+            self.extrato = f'# (Saldo) Saque de R$ {float(valor)} -> {round(self.saldo, 2)}'
 
     def Depositar(self, valor):
-        if valor > 0:
+        if valor.isspace() or not valor.isnumeric():
+            print('# Valor invalido!')
+        elif float(valor) < 0:
+            print('# Valor invalido!')
+        elif float(valor) > 0:
+            valor = float(valor)
             self.saldo = self.saldo + valor
             print(f'# Deposito de R$ {valor} realizado com sucesso!')
             print(f'# Saldo: {self.saldo}')
             self.extrato = f'# (Saldo) Deposito de R$ {valor} -> {self.saldo}'
-        else:
-            raise ValueError('# Valor invalido!')
 
     def TirarExtrato(self):
-        print('# Extrato:')
+        if not self.extrato:
+            print('# Extrato vazio!')
+            return None
+
         print(f'# Saldo: {self.saldo}')
+        print('# Extrato:')
         for i, operacao in enumerate(self.extrato):
             print(f'[{i}]: {operacao}')
 
@@ -188,34 +196,41 @@ class ContaEspecial(Conta):
         print(f'# Saldo: {self.saldo} - Limite Especial: {self.limite_especial}')
 
     def Sacar(self, valor):
-        if valor < 0:
-            raise ValueError('# Valor invalido!')
-        elif (valor > self.saldo and self.limite_especial > (valor - self.saldo)) or valor == (self.saldo + self.limite_especial):
+        if valor.isspace() or not valor.isnumeric():
+            print('# Valor invalido!')
+        elif float(valor) < 0:
+            print('# Valor invalido!')
+        elif (float(valor) > self.saldo and self.limite_especial > (float(valor) - self.saldo)) or float(valor) == (self.saldo + self.limite_especial):
             resp = input('> Deseja utilizar o limite especial? [S/N]: ')[0].upper()
             if resp == 'S':
-                self.__SacarLimiteEspecial(valor - self.saldo)
+                self.__SacarLimiteEspecial(float(valor) - self.saldo)
                 if self.saldo != 0:
-                    self.extrato = f'# (Saldo) Saque de R$ {valor} -> {round(self.saldo, 2)}'
-                self.extrato = f'# (Limite Especial) Saque de {round(valor - self.saldo, 2)} no limite especial -> {round(self.limite_especial, 2)}'
+                    self.extrato = f'# (Saldo) Saque de R$ {float(valor)} -> {round(self.saldo, 2)}'
+                self.extrato = f'# (Limite Especial) Saque de {round(float(valor) - self.saldo, 2)} no limite especial -> {round(self.limite_especial, 2)}'
                 self.saldo = 0
 
-                print(f'# Saque de R$ {valor} realizado com sucesso!')
+                print(f'# Saque de R$ {float(valor)} realizado com sucesso!')
                 print(f'# Saldo: {self.saldo} - Limite Especial: {self.limite_especial}')
             else:
                 print('# Saldo insuficiente! Não foi possivel realizar a operação.')
-        elif valor > self.saldo:
+        elif float(valor) > self.saldo:
             print('# Saldo insuficiente! Não foi possivel realizar a operação.')
         else:
-            self.saldo = self.saldo - valor
-            print(f'# Saque de R$ {valor} realizado com sucesso' )
+            self.saldo = self.saldo - float(valor)
+            print(f'# Saque de R$ {float(valor)} realizado com sucesso' )
             print(f'# Saldo: {self.saldo} - Limite Especial: {self.limite_especial}')
-            self.extrato = f'# (Saldo) Saque de R$ {valor} -> {round(self.saldo, 2)}'
+            self.extrato = f'# (Saldo) Saque de R$ {float(valor)} -> {round(self.saldo, 2)}'
 
     def __SacarLimiteEspecial(self, valor):
         self.limite_especial = self.limite_especial - valor
 
     def Depositar(self, valor):
-        if valor > 0 and self.limite_especial < 400:
+        if valor.isspace() or not valor.isnumeric():
+            print('# Valor invalido!')
+        elif float(valor) < 0:
+            print('# Valor invalido!')
+        elif float(valor) > 0 and self.limite_especial < 400:
+            valor = float(valor)
             valor_faltante_limite_especial = 400 - self.limite_especial
 
             if valor > valor_faltante_limite_especial:
@@ -230,13 +245,12 @@ class ContaEspecial(Conta):
                 
             print(f'# Deposito de R$ {valor} realizado com sucesso!')
             print(f'# Saldo: {self.saldo} - Limite Especial: {self.limite_especial}')
-        elif valor > 0:
+        elif float(valor) > 0:
+            valor = float(valor)
             self.saldo = self.saldo + valor
             print(f'# Deposito de R$ {valor} realizado com sucesso!')
             print(f'# Saldo: {self.saldo} - Limite Especial: {self.limite_especial}')
             self.extrato = f'# (Saldo) Deposito de R$ {valor} -> {self.saldo}'
-        else:
-            raise ValueError('# Valor invalido!')
 
 class ContaCorrente(Conta):
     def __init__(self, titulares):
@@ -260,7 +274,7 @@ class ContaPoupanca(Conta):
         return self.__data_de_criacao
 
     def InformacoesEspecificasDaConta(self):
-        print(f'# Saldo: {self.saldo} - Data de criacao: {self.data_de_criacao.strftime("%m/%d/%Y")} - Rendimentos: {self.rendimento}')
+        print(f'# Saldo: {self.saldo} - Data de criacao: {self.data_de_criacao.strftime("%d/%m/%Y")} - Rendimentos: {self.rendimento}')
 
     def CalcularRendimentoMensal(self):
         now = datetime.now()
@@ -268,21 +282,28 @@ class ContaPoupanca(Conta):
         saldo_por_mes = (self.saldo * (self.rendimento/100))
         self.saldo += (meses * saldo_por_mes)
 
-def PreCriacaoDeClientes():
-    clienteJoao = Cliente('Joao', '51 98171 0800')
-    clienteMaria = Cliente('Maria', '51 98899 5678')
-    clienteLincoln = Cliente('Lincoln', '51 30980789')
-    clienteGiovana = Cliente('Giovana', '48 99322 8741')
-    clienteJonata = Cliente('Jonata Tyska Carvalho', '51 90801 0801')
-    clienteMateus = Cliente('Mateus Grellert', '51 90800 0800')
-    return [clienteJoao, clienteMaria, clienteLincoln, clienteGiovana, clienteJonata, clienteMateus]
+def PreCriacaoDeClientes(tatu):
+    clienteJoao = Cliente('Joao', '51 98171 0800') # Conta Poupança
+    clienteMaria = Cliente('Maria', '51 98899 5678') # Conta Poupança
+    clienteLincoln = Cliente('Lincoln', '51 3098 0789') # Conta Poupança
+    clienteGiovana = Cliente('Giovana', '48 99322 8741') # Conta Corrente
+    clienteJonata = Cliente('Jonata Tyska Carvalho', '51 90801 0801') # Conta Corrente
+    clienteMateus = Cliente('Mateus Grellert', '51 90800 0800') # Conta Especial
+    
+    clientes = [clienteJoao, clienteMaria, clienteLincoln, clienteGiovana, clienteJonata, clienteMateus]
+    contasPoupanca = ContaPoupanca(clientes[:3], data_de_criacao = datetime(2021,10,14))
+    contasCorrente = ContaCorrente(clientes[3:5])
+    contasEspecial = ContaEspecial(clientes[5:])
+    tatu.AdicionarContaPoupanca(contasPoupanca)
+    tatu.AdicionarContaCorrente(contasCorrente)
+    tatu.AdicionarContaEspecial(contasEspecial)
 
 def Menu(tatu, conta):
-    print('# MENU')
     opcao_escolhida = 0
 
-    while True:
+    while True:  
         print('')
+        print('# MENU')
         print('[1]: Visualizar todas contas do banco tatu')
         print('[2]: Visualizar todos clientes do banco tatu')
         print('[3]: Sacar')
@@ -293,8 +314,8 @@ def Menu(tatu, conta):
 
         opcao_escolhida = input('> Escolha uma opcao: ')
 
-        if opcao_escolhida == 'z':
-            exit()
+        if opcao_escolhida.lower() == 'z':
+            break
 
         if opcao_escolhida == '1':
             tatu.VisualizarInformacoesContas()
@@ -303,11 +324,11 @@ def Menu(tatu, conta):
             tatu.VisualizarClientes()
         elif opcao_escolhida == '3':
             print('')
-            valor = float(input('> Digite um valor que deseja sacar: '))
+            valor = input('> Digite um valor que deseja sacar: ')
             conta.Sacar(valor)
         elif opcao_escolhida == '4':        
             print('')
-            valor = float(input('> Digite o valor que deseja depositar: '))
+            valor = input('> Digite o valor que deseja depositar: ')
             conta.Depositar(valor)
         elif opcao_escolhida == '5':
             print('')
@@ -338,6 +359,7 @@ def CriarConta(banco):
     return nome
 
 def main():
+    print('# Exercicio 1 - Banco')
     print('# BEM VINDO AO BANCO TATU')
     print('[Pressione Z para sair]')
     print('')
@@ -345,13 +367,7 @@ def main():
     sair = False
     tatu = Banco()
 
-    clientes = PreCriacaoDeClientes()
-    contasPoupanca = ContaPoupanca(clientes[:3], data_de_criacao = datetime(2021,10,14))
-    contasCorrente = ContaCorrente(clientes[3:5])
-    contasEspecial = ContaEspecial(clientes[5:])
-    tatu.AdicionarContaPoupanca(contasPoupanca)
-    tatu.AdicionarContaCorrente(contasCorrente)
-    tatu.AdicionarContaEspecial(contasEspecial)
+    PreCriacaoDeClientes(tatu)
 
     nome = ''
 
@@ -361,22 +377,25 @@ def main():
             verify_exite_conta = input('# Voce ja tem uma conta: [S/N/Z] ').lower()
 
         if verify_exite_conta == 's':
-            nome = input('> Digite seu nome e sobrenome: ')
-            cliente = tatu.ProcurarCliente(nome)
-            if cliente:
-                print('')
-                conta = tatu.ProcurarConta(nome)
-                nome_conta = str(re.sub(r"(\w)([A-Z])", r"\1 \2", type(conta).__name__))
-                print(f'# Ola {cliente}! {nome_conta}')
-                conta.InformacoesEspecificasDaConta()
-                print('')
-            else:
-                print('# Cliente nao encontrado!')
+            while True:
+                nome = input('> Digite seu nome e sobrenome: ')
+                cliente = tatu.ProcurarCliente(nome)
+                if cliente:
+                    print('')
+                    conta = tatu.ProcurarConta(nome)
+                    nome_conta = str(re.sub(r"(\w)([A-Z])", r"\1 \2", type(conta).__name__))
+                    print(f'# Ola {cliente}! {nome_conta}')
+                    conta.InformacoesEspecificasDaConta()
+                    break
+                else:
+                    print('# Cliente nao encontrado!')
         elif verify_exite_conta == 'z':
-            exit()
+            break
         else:
             nome = CriarConta(tatu)
 
         Menu(tatu, tatu.ProcurarConta(nome))
+        break
 
-main()
+if __name__ == '__main__':
+    main()
