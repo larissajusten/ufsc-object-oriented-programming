@@ -2,6 +2,7 @@ anyio==3.3.4
 apturl==0.5.2
 argon2-cffi==21.1.0
 attrs==21.2.0
+autopep8==1.6.0
 Babel==2.9.1
 backcall==0.2.0
 bcrypt==3.1.7
@@ -14,7 +15,7 @@ chardet==3.0.4
 Click==7.0
 colorama==0.4.3
 command-not-found==0.3
-cryptography>=3.2
+cryptography==35.0.0
 cupshelpers==1.0
 cycler==0.11.0
 dbus-python==1.2.16
@@ -32,7 +33,7 @@ fasteners==0.14.1
 fonttools==4.28.1
 future==0.18.2
 getch==1.0
-httplib2>=0.19.0
+httplib2==0.20.2
 idna==2.8
 importlib-resources==5.4.0
 ipykernel==6.5.0
@@ -78,6 +79,7 @@ packaging==21.3
 pandocfilters==1.5.0
 paramiko==2.6.0
 parso==0.8.2
+pbr==5.8.0
 pexpect==4.6.0
 pickleshare==0.7.5
 Pillow==8.3.2
@@ -86,6 +88,7 @@ prompt-toolkit==3.0.22
 protobuf==3.6.1
 ptyprocess==0.7.0
 pycairo==1.16.2
+pycodestyle==2.8.0
 pycparser==2.21
 pycups==1.9.73
 Pygments==2.10.0
@@ -103,7 +106,7 @@ python-debian===0.1.36ubuntu1
 python-xlib==0.31
 pytz==2019.3
 pyxdg==0.26
-PyYAML>=5.4
+PyYAML==6.0
 pyzmq==22.3.0
 reportlab==3.5.55
 requests==2.22.0
@@ -117,10 +120,12 @@ sniffio==1.2.0
 systemd-python==234
 terminado==0.12.1
 testpath==0.5.0
+testresources==2.0.1
+toml==0.10.2
 tomli==1.2.2
 tornado==6.1
 traitlets==5.1.1
-ubuntu-advantage-tools==27.3
+ubuntu-advantage-tools==27.4
 ubuntu-drivers-common==0.0.0
 ufw==0.36
 unattended-upgrades==0.1
