@@ -11,7 +11,7 @@ Utilize o gestor de pacotes [pip](https://pip.pypa.io/en/stable/) para instalar 
 pip install -r requirements.txt
 ```
 
-[Para windows utilize esse link](https://www.google.com/search?q=install+pip+windows&ei=dGiZYdv0EPDm1sQPpLaBmA4&oq=install+pip+win&gs_lcp=Cgdnd3Mtd2l6EAMYADIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeOgQIABBDOgsIABCABBCxAxCDAToICAAQgAQQsQM6BwgAELEDEEM6BggAEAoQEzoKCAAQFhAKEB4QEzoICAAQFhAeEBNKBAhBGABQAFjAHWCaKWgBcAJ4AIABywGIAY0RkgEGMC4xNS4xmAEAoAEBwAEB&sclient=gws-wiz)
+[Para windows utilize esse link](https://www.google.com/search?q=install+pip+windows&ei=dGiZYdv0EPDm1sQPpLaBmA4&oq=install+pip+win&gs_lcp=Cgdnd3Mtd2l6EAMYADIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeOgQIABBDOgsIABCABBCxAxCDAToICAAQgAQQsQM6BwgAELEDEEM6BggAEAoQEzoKCAAQFhAKEB4QEzoICAAQFhAeEBNKBAhBGABQAFjAHWCaKWgBcAJ4AIABywGIAY0RkgEGMC4xNS4xmAEAoAEBwAEB&sclient=gws-wiz) 🌝
 
 ## Contribuições
 
