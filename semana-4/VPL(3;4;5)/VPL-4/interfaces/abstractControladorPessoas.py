@@ -5,13 +5,13 @@ from tecnico import Tecnico
 class AbstractControladorPessoas(ABC):
 	# @return retorna a lista de clientes
 	@abstractproperty
-        @property
+	@property
 	def clientes(self) -> list:
 		pass
 
 	# @return retorna a lista de tecnicos
 	@abstractproperty
-        @property
+	@property
 	def tecnicos(self) -> list:
 		pass
 
