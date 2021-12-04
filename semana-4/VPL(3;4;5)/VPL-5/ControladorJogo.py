@@ -4,83 +4,69 @@ import random
 
 class ControladorJogo(AbstractControladorJogo):
     def __init__(self):
-        pass#implementar
+        self.__baralho = []
+        self.__personagens = []
 
-    '''
-    Retorna o baralho
-    @return o baralho
-    '''
     @property
     def baralho(self) -> list:
-        pass#implementar
+        return self.__baralho
 
-    '''
-    Retorna a lista de personagems
-    @return a lista de personagems
-    '''
     @property
     def personagems(self) -> list:
-        pass#implementar
+        return self.__personagens
 
-    '''
-    Permite incluir um novo Personagem na lista de personagens do jogo
-    @param energia Energia do novo Personagem
-    @param habilidade Habilidade do novo Personagem
-    @param velocidade Velocidade do novo Personagem
-    @param resistencia Resistencia do novo Personagem
-    @param tipo TipoPersonagem (Enum) do novo Personagem.
-    Deve ser utilizado TipoPersonagem.TIPO
-    @return Retorna o Personagem incluido na lista
-    '''
     def inclui_personagem_na_lista(self,
                                    energia: int,
                                    habilidade: int,
                                    velocidade: int,
                                    resistencia: int,
                                    tipo: Tipo) -> Personagem:
-        pass#implementar
+        existe_personagem = next((personagem for personagem in self.personagens
+                                  if personagem.tipo == tipo), False)
+        if not existe_personagem:
+            novo_personagem = Personagem(
+                energia, habilidade, velocidade, resistencia, tipo)
+            self.__personagens.append(novo_personagem)
+            return novo_personagem
 
-    '''
-     Permite incluir uma nova Carta no baralho do jogo
-     @param personagem Personagem da nova carta que sera incluida
-     @return Retorna a Carta que foi incluida no baralho
-     '''
     def inclui_carta_no_baralho(self, personagem: Personagem) -> Carta:
-        pass#implementar
+        existe_carta = next((carta for carta in self.baralho
+                            if carta.personagem == personagem), False)
+        if not existe_carta:
+            novo_carta = Carta(personagem)
+            self.__baralho.append(novo_carta)
+            return novo_carta
 
-    '''
-    Inicia o jogo, distribuindo aleatoriamente 5 cartas do baralho
-    para cada jogador, a distribuicao nao precisa ser aleatoria
-
-    @param jogador1 Jogador 1
-    @param jogador2 Jogador 2
-    '''
     def iniciaJogo(self, jogador1: Jogador, jogador2: Jogador):
-        pass#implementar
+        indexs = random.sample(range(0, len(self.__baralho)-1), 3)
+        self.__preencher_jogador(indexs[:4], jogador1)
+        self.__preencher_jogador(indexs[5:], jogador2)
 
-    '''
-     Realiza uma jogada, ou seja:
-     1. Recebe a mesa onde estao as cartas lancadas pelo Jogador 1
-     e pelo Jogador 2
-     2. Compara os valores totais das cartas dos jogadores que estao
-     na mesa
-     3. Apos comparacao:
+    def __preencher_jogador(index_valores, jogador):
+        if isinstance(jogador, Jogador):
+            for i in index_valores:
+                jogador.inclui_carta_na_mao(self.baralho[i])
 
-     O jogador que ganhar a rodada recebe a carta do jogador perdedor
-     sendo assim ele deve chamar o metodo inclui_carta_na_mao para as
-     duas cartas que estao na mesa
-
-     Caso ocorra empate ambos os jogadores devem chamar o metodo
-     inclui_carta_na_mao com suas respectivas cartas da mesa
-
-     4.Ao final do metodo o jogador que estiver com a mao vazia
-     perde o jogo, caso ambos ainda tenham cartas na mao retorne
-     None para indicar que por enquanto ninguem venceu o jogo.
-
-     @param mesa Mesa atual, contendo: Jogador 1, Jogador 2,
-     Carta do Jogador 1 e Carta do Jogador 2
-     @return Retorna o Jogador vencedor da rodada.
-     Caso ocorra empate entre os jogadores, retorna None
-     '''
     def jogada(self, mesa: Mesa) -> Jogador:
-        pass#implementar
+        compacao_jogadores = mesa.cartaJogador1.valor_total_carta - \
+            mesa.cartaJogador2.valor_total_carta
+        if compacao_jogadores == 0:
+            mesa.jogador1.inclui_carta_na_mao(
+                mesa.cartaJogador1.valor_total_carta)
+            mesa.jogador2.inclui_carta_na_mao(
+                mesa.cartaJogador2.valor_total_carta)
+            return None
+        elif compacao_jogadores < 0:
+            mesa.jogador2.inclui_carta_na_mao(
+                mesa.cartaJogador1.valor_total_carta)
+            mesa.jogador2.inclui_carta_na_mao(
+                mesa.cartaJogador2.valor_total_carta)
+            mesa.jogador1.remove_carta_da_mao(mesa.cartaJogador1)
+            return mesa.jogador2
+        else:
+            mesa.jogador1.inclui_carta_na_mao(
+                mesa.cartaJogador1.valor_total_carta)
+            mesa.jogador1.inclui_carta_na_mao(
+                mesa.cartaJogador2.valor_total_carta)
+            mesa.jogador2.remove_carta_da_mao(mesa.cartaJogador2)
+            return mesa.jogador1
