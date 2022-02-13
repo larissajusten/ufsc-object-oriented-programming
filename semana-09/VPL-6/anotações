@@ -1,0 +1,25 @@
+Pontos de atenção: 
+- andar atual do elevador
+- quantidade de andares do prédio
+- capacidade de pessoas suportada
+- contagem de pessoas no elevador
+
+- ações do elevador: subir e descer
+
+- controlar a quantidade de pessoas que entram e saem do elevador
+  - NÃO permitindo exceder o limite
+  
+- controlar se o elevador já chegou ao térreo (andar 0)
+- controlar se o elevador já chegou ao último andar
+
+- controles são realizados por meio da implementação de exceções
+
+- não é necessário realizar o tratamento das exceções
+
+- existem 4 casos que invalidam o comando de inicialização:
+  - algum parâmetro que não é um valor inteiro
+  - algum parâmetro com valor negativo
+  - o andar atual do elevador não respeita a restrição do número total de andares no prédio
+  - o número total de pessoas no elevador não respeita a restrição da capacidade máxima do elevador
+  
+ > Quando qualquer um desses casos ocorrer, o comando de inicialização é considerado inválido e o elevador deve manter seus atributos anteriores
