@@ -1,0 +1,8 @@
+Sistema de controle de impostos
+- permite o cadastro de empresas
+- permite o cadastro de impostos
+
+- Impostos têm uma alíquota
+- Cada imposto tem ainda uma regra de cálculo diferente
+
+-> informação do faturamento de serviços, produção e vendas -> sistema calcula o valor total de impostos a pagar
