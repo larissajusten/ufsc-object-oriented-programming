@@ -1,30 +1,69 @@
 """
-    TODO
-"""
+Arquivo da classe Empresa
 
-from impostos.imposto import Imposto
-from impostos.incidencia_imposto import IncidenciaImposto
+Classes:
+    Empresa
+"""
+from impostos import Imposto, IncidenciaImposto, ISS
 
 
 class Empresa():
-    '''TODO'''
+    """
+    Classe de representação de uma Empresa.
+
+    ...
+
+    Atributos
+    ----------
+    cnpj : int
+        número único que identifica uma pessoa jurídica e outros tipos de
+        arranjo jurídico sem personalidade jurídica junto à
+        Receita Federal brasileira
+    nome_de_fantasia : str
+        designação popular de título de estabelecimento utilizada
+        por uma instituição, seja pública ou privada, sob o qual
+        ela se torna conhecida do público.
+
+    Metodos
+    -------
+    inclui_imposto(): float
+        retorna o valor da diferenca de estado
+    diferenca_estado(diferenca_estado: float): None
+        define um novo valor para o atributo diferenca_estado
+    calcula_aliquota(): float
+        calculo da aliquota do imposto ICMS
+    """
 
     def __init__(self, cnpj: int, nome_de_fantasia: str):
         self.__cnpj = cnpj
         self.__nome_de_fantasia = nome_de_fantasia
         self.__impostos = []
-        self.__faturamento_servicos: float = 0.
-        self.__faturamento_producao: float = 0.
-        self.__faturamento_vendas: float = 0.
+        self.__faturamento_servicos = 0.
+        self.__faturamento_producao = 0.
+        self.__faturamento_vendas = 0.
 
     @property
     def cnpj(self) -> int:
-        '''TODO'''
+        '''
+        Número único que identifica uma pessoa jurídica e outros
+            tipos de arranjo jurídico sem personalidade jurídica junto à
+            Receita Federal brasileira
+
+            Retorno:
+                cnpj (int): valor do cnpj da empresa
+        '''
         return self.__cnpj
 
     @property
     def nome_de_fantasia(self) -> str:
-        '''TODO'''
+        '''
+        Designação popular de título de estabelecimento utilizada por
+            uma instituição, seja pública ou privada, sob o qual
+            ela se torna conhecida do público.
+
+            Retorno:
+                nome_de_fantasia (str): nome fantasia da empresa
+        '''
         return self.__nome_de_fantasia
 
     @nome_de_fantasia.setter
@@ -34,97 +73,98 @@ class Empresa():
     @property
     def impostos(self) -> list:
         '''
-            Retorna a lista de impostos da empresa
-            @return Lista de impostos da empresa
+        Retorna a lista de impostos da empresa
+        @return Lista de impostos da empresa
         '''
         return self.__impostos
 
     def __has_imposto(self, imposto: Imposto):
         '''
-            Verifica se o imposto ja esta cadastrado na lista de impostos
+        Verifica se o imposto ja esta cadastrado na lista atual de impostos
+            Parametros:
+                imposto (Imposto) : imposto a ser verificado
         '''
-        return next((imp for imp in self.impostos
-                     if imp.aliquota == imposto.aliquota
-                     and imp.incidencia_imposto ==
-                     imposto.incidencia_imposto), False)
+        if self.impostos and isinstance(imposto, Imposto):
+            return next((imp for imp in self.impostos
+                         if imp.aliquota == imposto.aliquota
+                         and imp.incidencia_imposto ==
+                         imposto.incidencia_imposto), False)
 
     def inclui_imposto(self, imposto: Imposto) -> None:
         '''
-            Inclui um imposto na lista de impostos da empresa
-            Verifica se o imposto ja esta cadastrado antes de inserir um novo
-            @param imposto imposto a ser incluido
+        Inclui um imposto na lista de impostos da empresa
+        Verifica se o imposto ja esta cadastrado antes de inserir um novo
+        @param imposto imposto a ser incluido
         '''
-        if not self.__has_imposto(imposto):
+        if not self.__has_imposto(imposto) and isinstance(imposto, Imposto):
             self.__impostos.append(imposto)
 
     def remove_imposto(self, imposto: Imposto):
         '''
-            Exclui um imposto cadastrado
-            @param imposto imposto a ser excluido da lista de impostos da empresa
+        Exclui um imposto cadastrado
+        @param imposto imposto a ser excluido da lista de impostos da empresa
         '''
-        if not self.__has_imposto(imposto):
-            self.__impostos.append(imposto)
+        if self.__has_imposto(imposto):
+            self.__impostos.remove(imposto)
 
     @property
-    def faturamento_servicos(self) -> list:
-        '''TODO'''
+    def faturamento_servicos(self) -> float:
+        '''Valor de faturamentos do tipo servico feitos na empresa'''
         return self.__faturamento_servicos
 
     @property
-    def faturamento_producao(self) -> list:
-        '''TODO'''
+    def faturamento_producao(self) -> float:
+        '''Valor de faturamentos do tipo producao feitos na empresa'''
         return self.__faturamento_producao
 
     @property
-    def faturamento_vendas(self) -> list:
-        '''TODO'''
+    def faturamento_vendas(self) -> float:
+        '''Valor de faturamentos do tipo vendas feitos na empresa'''
         return self.__faturamento_vendas
 
     def faturamento_total(self) -> float:
         '''
-            Calcula o total dos faturamentos da empresa,
-            somando: faturamento_producao,
-                faturamento_servicos e faturamento_vendas
-            @return Somatorio dos faturamentos
+        Calcula o total dos faturamentos da empresa,
+        somando: faturamento_producao,
+            faturamento_servicos e faturamento_vendas
+        @return Somatorio dos faturamentos
         '''
-        return sum(self.faturamento_servicos + self.faturamento_vendas
-                   + self.faturamento_producao)
+        fat = self.faturamento_vendas + self.faturamento_producao
+        return self.faturamento_servicos + fat
 
     def total_impostos(self) -> float:
         '''
-            Calcula o total de todos os impostos da empresa
-            Percorre a lista de impostos da empresa,
-            aplicando a aliquota de cada imposto.
-            Leva em conta o tipo de cada imposto (IncidenciaImposto) para
-            aplicar a aliquota ao faturamento de Producao, Vendas,
-            Servicos ou sobre o Total
-            @return
+        Calcula o total de todos os impostos da empresa
+        Percorre a lista de impostos da empresa,
+        aplicando a aliquota de cada imposto.
+        Leva em conta o tipo de cada imposto (IncidenciaImposto) para
+        aplicar a aliquota ao faturamento de Producao, Vendas,
+        Servicos ou sobre o Total
+        @return soma total dos impostos
         '''
         imp_producao = sum([(self.faturamento_producao *
-                             (imposto.calcula_aliquota()/100))
+                             (imposto.calcula_aliquota() / 100.0))
                             for imposto
                             in self.impostos
                             if imposto.incidencia_imposto ==
                             IncidenciaImposto.PRODUCAO])
 
         imp_vendas = sum([(self.faturamento_vendas *
-                           (imposto.calcula_aliquota()/100))
+                           (imposto.calcula_aliquota() / 100.0))
                           for imposto
                           in self.impostos
                           if imposto.incidencia_imposto ==
                           IncidenciaImposto.VENDAS])
 
         imp_servicos = sum([(self.faturamento_servicos *
-                             (imposto.calcula_aliquota()/100))
+                             (imposto.calcula_aliquota() / 100.0))
                             for imposto
                             in self.impostos
                             if imposto.incidencia_imposto ==
                             IncidenciaImposto.SERVICOS])
 
-        fat_todos = self.faturamento_servicos + \
-            self.faturamento_producao + self.faturamento_vendas
-
-        imp_todos = sum([(fat_todos * (imposto.calcula_aliquota()/100))
+        imp_todos = sum([(self.faturamento_total() *
+                          (imposto.calcula_aliquota() / 100.0))
                          for imposto
                          in self.impostos
                          if imposto.incidencia_imposto ==
@@ -136,10 +176,24 @@ class Empresa():
                          fat_servicos: float,
                          fat_producao: float,
                          fat_vendas: float):
-        '''TODO'''
+        '''
+        Define novos valores para os faturamentos de servicoes, producao,
+            vendas, respectivamente
+
+            Parametros:
+                fat_servicos (float): valor de faturamento de servicos
+                fat_producao (float): valor de faturamento de producao
+                fat_vendas (float): valor de faturamento de vendas
+        '''
         if isinstance(fat_servicos, float):
             self.__faturamento_servicos = fat_servicos
+        elif isinstance(fat_servicos, int):
+            self.__faturamento_servicos = float(fat_servicos)
         if isinstance(fat_producao, float):
             self.__faturamento_producao = fat_producao
+        elif isinstance(fat_producao, int):
+            self.__faturamento_producao = float(fat_producao)
         if isinstance(fat_vendas, float):
             self.__faturamento_vendas = fat_vendas
+        elif isinstance(fat_vendas, int):
+            self.__faturamento_vendas = float(fat_vendas)

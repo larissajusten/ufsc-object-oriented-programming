@@ -1,14 +1,34 @@
 """
-TODO
+Arquivo da classe Imposto
+
+Classes:
+    IPI
 """
-
-
-from imposto import Imposto
-from incidencia_imposto import IncidenciaImposto
+from . import Imposto, IncidenciaImposto
 
 
 class IPI(Imposto):
-    '''TODO'''
+    """
+    Classe de representação do Imposto IPI.
+
+    ...
+
+    Atributos
+    ----------
+    aliquota : float
+        percentual ou valor fixo que será aplicado para o cálculo do valor
+        de um tributo
+    incidencia_imposto : IncidenciaImposto
+        maneira pela qual a carga tributária é dividida entre compradores
+        e vendedores
+    aliquota_adicional : bool
+        flag para adicao de aliquota adicional
+
+    Metodos
+    -------
+    calcula_aliquota(): float
+        calculo da aliquota do imposto IPI
+    """
 
     def __init__(self, aliquota: float, incidencia_imposto: IncidenciaImposto,
                  aliquota_adicional: bool):
