@@ -1,20 +1,20 @@
-# Programação de Objetos II
-Repositório criado com o objectivo de partilhar programas desenvolvidos no curso de Programação Orientada a Objectos 2 ministrado pelos professores Dr. Jônata Tyska e Dr. Mateus Grellert.
+# Object-Oriented Programming II
+Repository created with the objective of sharing programs developed in the Object Oriented Programming 2 course taught by professors Dr. Jônata Tyska and Dr. Mateus Grellert.
 
-Anotações sobre as aulas estão na [Wiki](https://github.com/larissajusten/ufsc-object-oriented-programming/wiki).
+Notes about the classes are in the [Wiki](https://github.com/larissajusten/ufsc-object-oriented-programming/wiki).
 
-## Instalação
+## Installation
 
-Utilize o gestor de pacotes [pip](https://pip.pypa.io/en/stable/) para instalar os requisitos.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Contribuições
+## Contributions
 
-Pull requests são bem-vindos. Para grandes mudanças, por favor, abra um issue primeiro para discutir o que você gostaria de mudar.
+Pull requests are welcome. For big changes, please open an issue first to discuss what you would like to change.
 
-## Licença
+## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
